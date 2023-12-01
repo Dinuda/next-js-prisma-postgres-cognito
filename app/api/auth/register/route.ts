@@ -1,28 +1,25 @@
-import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 import { sendSESEmail } from "@/lib/aws/ses";
+import { create } from "@services/parentUserService";
+import toast from "react-hot-toast";
 
 export async function POST(req: Request) {
-  const { email, phone, name } = await req.json();
-  const exists = await prisma.parentUser.findUnique({
-    where: {
-      email,
-    },
-  });
-  if (exists) {
-    return NextResponse.json({ error: "User already exists" }, { status: 400 });
-  } else {
-    const user = await prisma.parentUser.create({
-      data: {
-        email,
-        phone,
-        name,
-        organization: { connect: { id: "1" } },
-        accountVerified: false,
-      },
-    });
-    sendSESEmail("test", email, "test");
+  try {
+    const { email, phone, name } = await req.json();
+    const user = await create(email, phone, name);
+    
+    sendSESEmail(
+      `Your verification code is `,
+      user.email,
+      "Verify your account"
+    );
+    console.log(user);
+    
     return NextResponse.json(user);
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ error: "User already exists" }, { status: 400 });
   }
 }
+
