@@ -1,11 +1,11 @@
 import prisma from "@/lib/prisma";
-import { NextApiRequest, NextApiResponse } from "next";
-import { hash } from "bcrypt";
 import { NextResponse } from "next/server";
 
+import { sendSESEmail } from "@/lib/aws/ses";
+
 export async function POST(req: Request) {
-  const { email, password } = await req.json();
-  const exists = await prisma.user.findUnique({
+  const { email, phone, name } = await req.json();
+  const exists = await prisma.parentUser.findUnique({
     where: {
       email,
     },
@@ -13,12 +13,16 @@ export async function POST(req: Request) {
   if (exists) {
     return NextResponse.json({ error: "User already exists" }, { status: 400 });
   } else {
-    const user = await prisma.user.create({
+    const user = await prisma.parentUser.create({
       data: {
         email,
-        password: await hash(password, 10),
+        phone,
+        name,
+        organization: { connect: { id: "1" } },
+        accountVerified: false,
       },
     });
+    sendSESEmail("test", email, "test");
     return NextResponse.json(user);
   }
 }

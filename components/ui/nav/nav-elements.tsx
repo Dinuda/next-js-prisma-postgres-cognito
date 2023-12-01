@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { INavLink } from "../../interface/INavLink";
+import { INavLink } from "../../interface/NavLink";
 
 
 export function NavElements({ navigationLinks }: { navigationLinks: INavLink[] }) {

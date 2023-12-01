@@ -1,28 +1,32 @@
-import Image from "next/image";
-import Form from "@/components/form";
-import Link from "next/link";
+"use client";
 
-export default function Login() {
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { RegisterForm } from "./register-form";
+
+export default function Register() {
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-gray-50">
-      <div className="z-10 w-full max-w-md overflow-hidden rounded-2xl border border-gray-100 shadow-xl">
-        <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 bg-white px-4 py-6 pt-8 text-center sm:px-16">
-          <Link href="/">
-            <Image
-              src="/logo.png"
-              priority
-              alt="Logo"
-              className="h-10 w-10 rounded-full"
-              width={20}
-              height={20}
-            />
-          </Link>
-          <h3 className="text-xl font-semibold">Sign Up</h3>
-          <p className="text-sm text-gray-500">
-            Create an account with your email and password
-          </p>
+    <div className="hidden items-start justify-center gap-6 rounded-lg p-8 md:grid">
+      <div className="col-span-2 grid items-start gap-6 lg:col-span-1">
+        <div className="flex items-center justify-center [&>div]:w-full">
+          <Card>
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-2xl">Create an account</CardTitle>
+              <CardDescription>
+                Enter your email below to create your account
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-4">
+              <RegisterForm />
+            </CardContent>
+          </Card>
         </div>
-        <Form type="register" />
       </div>
     </div>
   );

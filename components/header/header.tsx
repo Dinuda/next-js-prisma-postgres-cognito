@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth/next";
 import ProfileSwitcher from "../ui/nav/profile-switcher";
 import { UserNav } from "../ui/nav/user-nav";
 import { NavElements } from "../ui/nav/nav-elements";
-import { INavLink } from "../interface/INavLink";
+import { INavLink } from "../interface/NavLink";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import Router from "next/navigation";
@@ -41,7 +41,7 @@ export default async function Header() {
                   <NavElements navigationLinks={navigation} />
                 </div>
                 <div className="ml-auto flex items-center space-x-4">
-                  <Link href="/register" className="">
+                <Link href="/register" className="">
                   <Button variant="brown" >
                       Register
                     </Button>

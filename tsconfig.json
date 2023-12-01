@@ -12,6 +12,7 @@
       "@/lib/*": ["lib/*"],
       "@/styles/*": ["styles/*"],
       "@theme/*": ["theme/*"],
+      "@core/*": ["core/*"],
     },
     "strict": true,
     "forceConsistentCasingInFileNames": true,
